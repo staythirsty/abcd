@@ -1,279 +1,209 @@
 <html>
-
     <head>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+        <meta charset="utf-8">
+
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.1/css/bootstrap-slider.min.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.1/bootstrap-slider.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+        <style>
+            .circular-pb-segment-grad, .circular-pb-segment-solid, .linear-pb-segment{
+                width: 200px;
+                height: 200px;
+            }
+            .full-arc{
+                stroke:lightgrey;
+                stroke-width: 20;
+                fill: none; 
+            }
+            .progress-arc{
+                stroke: #90257c;
+                stroke-width: 20;
+                fill: none;
+            }
+            .arc-slim{
+                stroke-width: 18;
+            }
+            .progress-arc-gradient{
+                stroke: linear-gradient( left, #066b17, #ffc72b 100.0%);
+            }
+        </style>
     </head>
 
     <body>
-
-        <div class="container">
-            <nav class="navbar navbar-default">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <a class="navbar-brand" href="#">Vizulations</a>
-                    </div>
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav">
-                            <li class="active"><a href="#">SVG <span class="sr-only">(current)</span></a></li>
-                            <li><a href="#">D3JS</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </div>
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Progress Bar using Circle</h3>
-                        </div>
-                        <div class="panel-body">                     
-                            <svg width="100" height="100" progress="90" onload="init(evt)">
-
-                                <script type="text/javascript">
-                                    function init(evt) {
-                                        var svgElement = evt.target;
-
-                                        var progressValue = svgElement.getAttribute('progress');
-                                        var width = svgElement.getAttribute('width');
-                                        var radius = (width-10) / 2;
-                                        var cx = (width-10) / 2 + 5;
-                                        var cy = (width-10) / 2 + 5;
-
-                                        var progressCircle = svgElement.getElementById('progress');
-                                        progressCircle.setAttribute('r',radius);
-                                        progressCircle.setAttribute('cx',cx);
-                                        progressCircle.setAttribute('cy',cy);
-                                        progressCircle.setAttribute("stroke-dasharray",calcDashoffset(radius, progressValue))
-
-
-
-                                        var progressCircleBG = svgElement.getElementById('progress-background');
-                                        progressCircleBG.setAttribute('r',radius);
-                                        progressCircleBG.setAttribute('cx',cx);
-                                        progressCircleBG.setAttribute('cy',cy);
-
-
-                                        var progressText = svgElement.getElementById('progress-text');
-                                        progressText.setAttribute('x',cx);
-                                        progressText.setAttribute('y',cy + 10);
-                                        progressText.textContent = progressValue
-
-
-
-                                        var circleContainer = svgElement.getElementById('circle-container');
-                                        circleContainer.setAttribute('transform',"rotate(-90 " + cx + " " + cy + ")");
-
-
-                                    }
-                                    function calcDashoffset(progressCircleRadius, value) {
-                                        var progress = value / 100;
-                                        var dashoffset1 = 2 * Math.PI * progressCircleRadius * (progress);
-                                        var dashoffset2 = 2 * Math.PI * progressCircleRadius * (1 - progress);
-                                        return dashoffset1 + "," + dashoffset2;
-                                    }
-                                </script>
-
-                                <style>
-                                    .pb-background {
-                                    stroke: lightgray;
-                                    stroke-width: 10px;
-                                    stroke-linecap: round;
-                                    fill: none;
-                                    }
-                                    .pb {
-                                    stroke: steelblue;
-                                    stroke-width: 10px;
-                                    stroke-linecap: round;
-                                    fill: none;
-                                    }
-                                    .pb-text {
-                                    font-family: "Arial";
-                                    font-size: 2em
-                                    }
-                                </style>
-
-                                <g id="circle-container" transform="rotate(-90 150 150)">  
-                                    <circle id='progress-background' class="pb-background" r=50 cx=100 cy=100 />
-                                    <circle id='progress' class="pb" stroke-dasharray="157,157" r=50 cx=100 cy=100 />
-                                </g>
-                                <g>
-                                    <text id='progress-text' class="pb-text" x="100" y="110" text-anchor="middle">100</text>
-                                </g>
-                            </svg>
-                        </div>
+                <div class="col-lg-12">
+                    <div class="page-header">
+                        <h1>SVG widgets</h1>
                     </div>
                 </div>
-
+            </div>
+            <div class="row">
                 <div class="col-md-4">
-                    <div class="panel panel-info">
+                    <svg width="300" height="100">
+                        <line x1="20" y1="20" x2="250" y2="20"  stroke-width="10" stroke="black"
+                        stroke-dasharray="25,1" />
+                        <line x1="20" y1="20" x2="145" y2="20"  stroke-width="10" stroke="green"
+                        stroke-dasharray="25,1" />
+                        <circle cx="20" cy="20" r="5" fill="green"/>
+                        <circle cx="250" cy="20" r="5"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default center-block text-center">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Progress Bar using Circle</h3>
+                            <h3 class="panel-title">Circular Progress Bars</h3>
                         </div>
-                        <div class="panel-body">                     
-                            <svg width="100" height="100" progress="90" onload="init(evt)">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <svg class="circular-pb-segment-grad">
+                                        <g>
+                                            <path class="full-arc" d ="" 
+                                                    stroke-dasharray="14,2" />
+                                            <path class="progress-arc progress-arc-gradient" d ="" 
+                                                    stroke-dasharray="14,2" />
+                                        </g>
 
-                                <script type="text/javascript">
-                                    function init(evt) {
-                                        var svgElement = evt.target;
+                                    </svg>
+                                </div>
+                                <div class="col-lg-4">
+                                    <svg class="circular-pb-segment-solid">
+                                        <g>
+                                            <path class="full-arc arc-slim" d ="" 
+                                                    stroke-dasharray="20,2" />
+                                            <path class="progress-arc arc-slim" d ="" 
+                                                    stroke-dasharray="20,2" />
+                                        </g>
 
-                                        var progressValue = svgElement.getAttribute('progress');
-                                        var width = svgElement.getAttribute('width');
-                                        var radius = (width-10) / 2;
-                                        var cx = (width-10) / 2 + 5;
-                                        var cy = (width-10) / 2 + 5;
-
-                                        var progressCircle = svgElement.getElementById('progress');
-                                        progressCircle.setAttribute('r',radius);
-                                        progressCircle.setAttribute('cx',cx);
-                                        progressCircle.setAttribute('cy',cy);
-                                        progressCircle.setAttribute("stroke-dasharray",calcDashoffset(radius, progressValue))
-
-
-
-                                        var progressCircleBG = svgElement.getElementById('progress-background');
-                                        progressCircleBG.setAttribute('r',radius);
-                                        progressCircleBG.setAttribute('cx',cx);
-                                        progressCircleBG.setAttribute('cy',cy);
-
-
-                                        var progressText = svgElement.getElementById('progress-text');
-                                        progressText.setAttribute('x',cx);
-                                        progressText.setAttribute('y',cy + 10);
-                                        progressText.textContent = progressValue
-
-
-
-                                        var circleContainer = svgElement.getElementById('circle-container');
-                                        circleContainer.setAttribute('transform',"rotate(-90 " + cx + " " + cy + ")");
-
-
-                                    }
-                                    function calcDashoffset(progressCircleRadius, value) {
-                                        var progress = value / 100;
-                                        var dashoffset1 = 2 * Math.PI * progressCircleRadius * (progress);
-                                        var dashoffset2 = 2 * Math.PI * progressCircleRadius * (1 - progress);
-                                        return dashoffset1 + "," + dashoffset2;
-                                    }
-                                </script>
-
-                                <style>
-                                    .pb-background {
-                                    stroke: lightgray;
-                                    stroke-width: 10px;
-                                    stroke-linecap: round;
-                                    fill: none;
-                                    }
-                                    .pb {
-                                    stroke: steelblue;
-                                    stroke-width: 10px;
-                                    stroke-linecap: round;
-                                    fill: none;
-                                    }
-                                    .pb-text {
-                                    font-family: "Arial";
-                                    font-size: 2em
-                                    }
-                                </style>
-
-                                <g id="circle-container" transform="rotate(-90 150 150)">  
-                                    <circle id='progress-background' class="pb-background" r=50 cx=100 cy=100 />
-                                    <circle id='progress' class="pb" stroke-dasharray="157,157" r=50 cx=100 cy=100 />
-                                </g>
-                                <g>
-                                    <text id='progress-text' class="pb-text" x="100" y="110" text-anchor="middle">100</text>
-                                </g>
-                            </svg>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            Adjust : <input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-tooltip="hide" data-slider-min="0" data-slider-max="359" data-slider-step="1" data-slider-value="180"/>
                         </div>
                     </div>
+
                 </div>
+                
+            </div>
 
-                <div class="col-md-4">
-                    <div class="panel panel-info">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default center-block text-center">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Progress Bar using Circle</h3>
+                            <h3 class="panel-title">Linear Progress Bar</h3>
                         </div>
-                        <div class="panel-body">                     
-                            <svg width="100" height="100" progress="90" onload="init(evt)">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <svg class="linear-pb-segment">
+                                        <g>
+                                            <rect x="10" y="10" width="100" height="10"/>
 
-                                <script type="text/javascript">
-                                    function init(evt) {
-                                        var svgElement = evt.target;
+                                            <line stroke-linecap="round"
+                                                x1="20" y1="60" x2="120" y2="60"
+                                                stroke="black" stroke-width="20" stroke-dasharray="10, 5" />                                            
+                                        </g>
 
-                                        var progressValue = svgElement.getAttribute('progress');
-                                        var width = svgElement.getAttribute('width');
-                                        var radius = (width-10) / 2;
-                                        var cx = (width-10) / 2 + 5;
-                                        var cy = (width-10) / 2 + 5;
-
-                                        var progressCircle = svgElement.getElementById('progress');
-                                        progressCircle.setAttribute('r',radius);
-                                        progressCircle.setAttribute('cx',cx);
-                                        progressCircle.setAttribute('cy',cy);
-                                        progressCircle.setAttribute("stroke-dasharray",calcDashoffset(radius, progressValue))
-
-
-
-                                        var progressCircleBG = svgElement.getElementById('progress-background');
-                                        progressCircleBG.setAttribute('r',radius);
-                                        progressCircleBG.setAttribute('cx',cx);
-                                        progressCircleBG.setAttribute('cy',cy);
-
-
-                                        var progressText = svgElement.getElementById('progress-text');
-                                        progressText.setAttribute('x',cx);
-                                        progressText.setAttribute('y',cy + 10);
-                                        progressText.textContent = progressValue
-
-
-
-                                        var circleContainer = svgElement.getElementById('circle-container');
-                                        circleContainer.setAttribute('transform',"rotate(-90 " + cx + " " + cy + ")");
-
-
-                                    }
-                                    function calcDashoffset(progressCircleRadius, value) {
-                                        var progress = value / 100;
-                                        var dashoffset1 = 2 * Math.PI * progressCircleRadius * (progress);
-                                        var dashoffset2 = 2 * Math.PI * progressCircleRadius * (1 - progress);
-                                        return dashoffset1 + "," + dashoffset2;
-                                    }
-                                </script>
-
-                                <style>
-                                    .pb-background {
-                                    stroke: lightgray;
-                                    stroke-width: 10px;
-                                    stroke-linecap: round;
-                                    fill: none;
-                                    }
-                                    .pb {
-                                    stroke: steelblue;
-                                    stroke-width: 10px;
-                                    stroke-linecap: round;
-                                    fill: none;
-                                    }
-                                    .pb-text {
-                                    font-family: "Arial";
-                                    font-size: 2em
-                                    }
-                                </style>
-
-                                <g id="circle-container" transform="rotate(-90 150 150)">  
-                                    <circle id='progress-background' class="pb-background" r=50 cx=100 cy=100 />
-                                    <circle id='progress' class="pb" stroke-dasharray="157,157" r=50 cx=100 cy=100 />
-                                </g>
-                                <g>
-                                    <text id='progress-text' class="pb-text" x="100" y="110" text-anchor="middle">100</text>
-                                </g>
-                            </svg>
+                                    </svg>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <script type="text/javascript">
+
+            function calcArcPath(cx,cy,r,sangle,eangle){
+
+                sangle = (sangle + 270) % 360;
+                eangle = (eangle + 270) % 360;
+
+                var sx = cx + Math.cos(sangle/ 360 * 2 * Math.PI) * r;
+                var sy = cy + Math.sin(sangle/ 360 * 2 * Math.PI) * r;
+
+                var ex = cx + Math.cos(eangle/ 360 * 2 * Math.PI) * r;
+                var ey = cy + Math.sin(eangle/ 360 * 2 * Math.PI) * r; 
+                
+                var path = "M" + sx +" " + sy;
+
+                if (eangle > 270){
+                    path += " A " + r + " " + r + ",0,0,1," + ex +" " + ey;
+                }else if((eangle >= 0) && (eangle <= 90)){
+                    path += " A " + r + " " + r + ",0,0,1," + ex +" " + ey;
+                }else if((eangle > 90) && (eangle <= 180)){
+                    path += " A " + r + " " + r + ",0,1,1," + ex +" " + ey;
+                }else if((eangle > 180) && (eangle <= 270)){
+                    path += " A " + r + " " + r + ",0,1,1," + ex +" " + ey;
+                }
+
+                return path;
+            }
+
+            function setCircularProgressBarSegementGradient(value){
+                
+                var radius = 80, cx = 100, cy = 100,segments = 16;
+                var circumference = 2 * Math.PI * radius;
+
+                var strokeDasharray = circumference/segments -2 +"," + 2;
+
+                var fullArc = document.querySelector("svg.circular-pb-segment-grad g path.full-arc"); 
+                fullArc.setAttribute("d", calcArcPath(cx,cy,radius,0,359.9999));
+                fullArc.setAttribute("stroke-dasharray", strokeDasharray);
+
+
+                var progressArc = document.querySelector("svg.circular-pb-segment-grad g path.progress-arc");
+                progressArc.setAttribute("d", calcArcPath(cx,cy,radius,0,value));
+                progressArc.setAttribute("stroke-dasharray", strokeDasharray);
+
+            }
+
+
+            function setCircularProgressBarSegementSolid(value){
+
+                var radius = 80, cx = 100, cy = 100,segments = 10;
+                var circumference = 2 * Math.PI * radius;
+
+                var strokeDasharray = circumference/segments - 1 +"," + 1;
+
+                var fullArc = document.querySelector("svg.circular-pb-segment-solid g path.full-arc"); 
+                fullArc.setAttribute("d", calcArcPath(cx,cy,radius,0,359.9999));
+                fullArc.setAttribute("stroke-dasharray", strokeDasharray);
+
+
+                var progressArc = document.querySelector("svg.circular-pb-segment-solid g path.progress-arc");
+                progressArc.setAttribute("d", calcArcPath(cx,cy,radius,0,value));
+                progressArc.setAttribute("stroke-dasharray", strokeDasharray);
+
+            }
+
+            function setAllCircularProgressBars(value){
+                setCircularProgressBarSegementGradient(value);
+                setCircularProgressBarSegementSolid(value);
+            }
+
+            // Without JQuery
+            $('#ex1').slider({
+                    formatter: function(value) {
+                       setAllCircularProgressBars(value) 
+                }
+            });
+
+
+            setAllCircularProgressBars(180);
+
+
+        </script>
+
     </body>
 </html>
