@@ -1,178 +1,90 @@
 <html>
 
-<head>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
 
-</head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <svg width="100" height="100" progress="90" onload="init(evt)">
 
-<body>
+                        <script type="text/javascript">
+                            function init(evt) {
+                                var svgElement = evt.target;
 
+                                var progressValue = svgElement.getAttribute('progress');
+                                var width = svgElement.getAttribute('width');
+                                var radius = (width-10) / 2;
+                                var cx = (width-10) / 2 + 5;
+                                var cy = (width-10) / 2 + 5;
 
-<svg width="100" height="100" progress="90" onload="init(evt)">
-
-    <script type="text/javascript">
-        function init(evt) {
-            var svgElement = evt.target;
-
-            var progressValue = svgElement.getAttribute('progress');
-            var width = svgElement.getAttribute('width');
-            var radius = (width-10) / 2;
-            var cx = (width-10) / 2 + 5;
-            var cy = (width-10) / 2 + 5;
-
-            var progressCircle = svgElement.getElementById('progress');
-            progressCircle.setAttribute('r',radius);
-            progressCircle.setAttribute('cx',cx);
-            progressCircle.setAttribute('cy',cy);
-            progressCircle.setAttribute("stroke-dasharray",calcDashoffset(radius, progressValue))
-
-
-
-            var progressCircleBG = svgElement.getElementById('progress-background');
-            progressCircleBG.setAttribute('r',radius);
-            progressCircleBG.setAttribute('cx',cx);
-            progressCircleBG.setAttribute('cy',cy);
-
-
-            var progressText = svgElement.getElementById('progress-text');
-            progressText.setAttribute('x',cx);
-            progressText.setAttribute('y',cy + 10);
-            progressText.textContent = progressValue
+                                var progressCircle = svgElement.getElementById('progress');
+                                progressCircle.setAttribute('r',radius);
+                                progressCircle.setAttribute('cx',cx);
+                                progressCircle.setAttribute('cy',cy);
+                                progressCircle.setAttribute("stroke-dasharray",calcDashoffset(radius, progressValue))
 
 
 
-            var circleContainer = svgElement.getElementById('circle-container');
-            circleContainer.setAttribute('transform',"rotate(-90 " + cx + " " + cy + ")");
+                                var progressCircleBG = svgElement.getElementById('progress-background');
+                                progressCircleBG.setAttribute('r',radius);
+                                progressCircleBG.setAttribute('cx',cx);
+                                progressCircleBG.setAttribute('cy',cy);
 
 
-        }
-        function calcDashoffset(progressCircleRadius, value) {
-            var progress = value / 100;
-            var dashoffset1 = 2 * Math.PI * progressCircleRadius * (progress);
-            var dashoffset2 = 2 * Math.PI * progressCircleRadius * (1 - progress);
-            return dashoffset1 + "," + dashoffset2;
-        }
-    </script>
-
-    <style>
-        .pb-background {
-          stroke: lightgray;
-          stroke-width: 10px;
-          stroke-linecap: round;
-          fill: none;
-        }
-        .pb {
-          stroke: steelblue;
-          stroke-width: 10px;
-          stroke-linecap: round;
-          fill: none;
-        }
-        .pb-text {
-          font-family: "Arial";
-          font-size: 2em
-        }
-    </style>
-
-    <g id="circle-container" transform="rotate(-90 150 150)">  
-        <circle id='progress-background' class="pb-background" r=50 cx=100 cy=100 />
-        <circle id='progress' class="pb" stroke-dasharray="157,157" r=50 cx=100 cy=100 />
-    </g>
-    <g>
-        <text id='progress-text' class="pb-text" x="100" y="110" text-anchor="middle">100</text>
-    </g>
-</svg>
-
-
-<svg width="200" height="200" progress="90" onload="init(evt)">
-
-    <defs>
-   <linearGradient id="linear" x1="0%" y1="0%" x2="100%" y2="0%">
-     <stop offset="0%"   stop-color="#05a"/>
-     <stop offset="25%"  stop-color="#555"/>
-     <stop offset="50%"  stop-color="#a55"/>
-     <stop offset="75%"  stop-color="#755"/>
-     <stop offset="100%" stop-color="#0a5"/>
-   </linearGradient>
-    </defs>
-
-    <script type="text/javascript">
-        function init(evt) {
-
-
-            var svgElement = evt.target;
-
-            var progressValue = svgElement.getAttribute('progress');
-            var width = svgElement.getAttribute('width');
-            var radius = (width-10) / 2;
-            var cx = (width-10) / 2 + 5;
-            var cy = (width-10) / 2 + 5;
-
-
-            var progressCircle = svgElement.getElementById('progress');
-            progressCircle.setAttribute('r',radius);
-            progressCircle.setAttribute('cx',cx);
-            progressCircle.setAttribute('cy',cy);
-            progressCircle.setAttribute("stroke-dasharray",calcDashoffset(radius, progressValue))
-
-            console.log("rotate(-90 " + cx + " " + cy + ")")
-
-            var progressCircleBG = svgElement.getElementById('progress-background');
-            progressCircleBG.setAttribute('r',radius);
-            progressCircleBG.setAttribute('cx',cx);
-            progressCircleBG.setAttribute('cy',cy);
-
-
-            var progressText = svgElement.getElementById('progress-text');
-            progressText.setAttribute('x',cx);
-            progressText.setAttribute('y',cy + 10);
-            progressText.textContent = progressValue
+                                var progressText = svgElement.getElementById('progress-text');
+                                progressText.setAttribute('x',cx);
+                                progressText.setAttribute('y',cy + 10);
+                                progressText.textContent = progressValue
 
 
 
-            console.log("rotate(-90 " + cx + " " + cy + ")")
+                                var circleContainer = svgElement.getElementById('circle-container');
+                                circleContainer.setAttribute('transform',"rotate(-90 " + cx + " " + cy + ")");
 
 
-            var circleContainer = svgElement.getElementById('circle-container');
-            circleContainer.setAttribute('transform',"rotate(-90 " + cx + " " + cy + ")");
+                            }
+                            function calcDashoffset(progressCircleRadius, value) {
+                                var progress = value / 100;
+                                var dashoffset1 = 2 * Math.PI * progressCircleRadius * (progress);
+                                var dashoffset2 = 2 * Math.PI * progressCircleRadius * (1 - progress);
+                                return dashoffset1 + "," + dashoffset2;
+                            }
+                        </script>
 
-            console.log("rotate(-90 " + cx + " " + cy + ")")
+                        <style>
+                            .pb-background {
+                            stroke: lightgray;
+                            stroke-width: 10px;
+                            stroke-linecap: round;
+                            fill: none;
+                            }
+                            .pb {
+                            stroke: steelblue;
+                            stroke-width: 10px;
+                            stroke-linecap: round;
+                            fill: none;
+                            }
+                            .pb-text {
+                            font-family: "Arial";
+                            font-size: 2em
+                            }
+                        </style>
 
-
-        }
-        function calcDashoffset(progressCircleRadius, value) {
-            var progress = value / 100;
-            var dashoffset1 = 2 * Math.PI * progressCircleRadius * (progress);
-            var dashoffset2 = 2 * Math.PI * progressCircleRadius * (1 - progress);
-            return dashoffset1 + "," + dashoffset2;
-        }
-    </script>
-
-    <style>
-        .pb-background {
-          stroke: lightgray;
-          stroke-width: 10px;
-          stroke-linecap: flat;
-          fill: none;
-        }
-        .pb {
-          stroke: url(#linear);
-          stroke-width: 10px;
-          stroke-linecap: flat;
-          fill: none;
-        }
-        .pb-text {
-          font-family: "Arial";
-          font-size: 2em
-        }
-    </style>
-
-    <g id="circle-container" transform="rotate(-90 150 150)">  
-        <circle id='progress-background' class="pb-background" stroke-dasharray="10,2"  r=50 cx=100 cy=100 />
-        <circle id='progress1' class="pb" stroke-dasharray="10,2" r=50 cx=100 cy=100 />
-    </g>
-    <g>
-        <text id='progress-text' class="pb-text" x="100" y="110" text-anchor="middle">100</text>
-    </g>
-</svg>
-
-</body>
+                        <g id="circle-container" transform="rotate(-90 150 150)">  
+                            <circle id='progress-background' class="pb-background" r=50 cx=100 cy=100 />
+                            <circle id='progress' class="pb" stroke-dasharray="157,157" r=50 cx=100 cy=100 />
+                        </g>
+                        <g>
+                            <text id='progress-text' class="pb-text" x="100" y="110" text-anchor="middle">100</text>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>
