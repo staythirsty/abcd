@@ -30,6 +30,12 @@
             .progress-arc-gradient{
                 stroke: linear-gradient( left, #066b17, #ffc72b 100.0%);
             }
+            .progress-value{
+                font-family: "Verdana";
+                font-size : 2.5em;
+                fill: #90257c;
+                background-color: none;
+            }
             .linear-pb-segment-gradient, .linear-pb-segment, .linear-pb{
 
             }
@@ -75,6 +81,7 @@
                                                     stroke-dasharray="14,2" />
                                             <path class="progress-arc progress-arc-gradient" d ="" 
                                                     stroke-dasharray="14,2" />
+                                              <text class="progress-value" alignment-baseline="middle" text-anchor="middle" x="" y=""></text>
                                         </g>
 
                                     </svg>
@@ -86,6 +93,8 @@
                                                     stroke-dasharray="20,2" />
                                             <path class="progress-arc arc-slim" d ="" 
                                                     stroke-dasharray="20,2" />
+                                              <text class="progress-value" alignment-baseline="middle" text-anchor="middle" x="" y=""></text>
+
                                         </g>
 
                                     </svg>
@@ -95,6 +104,8 @@
                                         <g>
                                             <path class="full-arc arc-slim" d =""/>
                                             <path class="progress-arc arc-slim" d =""/>
+                                              <text class="progress-value" alignment-baseline="middle" text-anchor="middle" x="" y=""></text>
+
                                         </g>
 
                                     </svg>
@@ -102,7 +113,7 @@
                             </div>
                         </div>
                         <div class="panel-footer">
-                            Adjust : <input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-tooltip="hide" data-slider-min="0" data-slider-max="359.9999" data-slider-step="1" data-slider-value="180"/>
+                            Adjust : <input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-tooltip="hide" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="180"/>
                         </div>
                     </div>
 
@@ -181,6 +192,9 @@
 
             function setCircularProgressBarSegementGradient(value){
                 
+                var tempvalue = (value == 100) ? 99.9999:value;
+
+                var degreeValue = 360 * tempvalue / 100;
                 var radius = 80, cx = 100, cy = 100,segments = 16;
                 var circumference = 2 * Math.PI * radius;
 
@@ -192,13 +206,21 @@
 
 
                 var progressArc = document.querySelector("svg.circular-pb-segment-grad g path.progress-arc");
-                progressArc.setAttribute("d", calcArcPath(cx,cy,radius,0,value));
+                progressArc.setAttribute("d", calcArcPath(cx,cy,radius,0,degreeValue));
                 progressArc.setAttribute("stroke-dasharray", strokeDasharray);
+
+                var progressValue= document.querySelector("svg.circular-pb-segment-grad g text.progress-value");
+                progressValue.setAttribute("x", cx);
+                progressValue.setAttribute("y", cy);
+                progressValue.textContent = value + "%"
 
             }
 
 
             function setCircularProgressBarSegementSolid(value){
+                var tempvalue = (value == 100) ? 99.9999:value;
+                
+                var degreeValue = 360 * tempvalue / 100;
 
                 var radius = 80, cx = 100, cy = 100,segments = 10;
                 var circumference = 2 * Math.PI * radius;
@@ -211,14 +233,22 @@
 
 
                 var progressArc = document.querySelector("svg.circular-pb-segment-solid g path.progress-arc");
-                progressArc.setAttribute("d", calcArcPath(cx,cy,radius,0,value));
+                progressArc.setAttribute("d", calcArcPath(cx,cy,radius,0,degreeValue));
                 progressArc.setAttribute("stroke-dasharray", strokeDasharray);
+
+                var progressValue= document.querySelector("svg.circular-pb-segment-solid g text.progress-value");
+                progressValue.setAttribute("x", cx);
+                progressValue.setAttribute("y", cy);
+                progressValue.textContent = value + "%"
 
             }
 
 
             function setCircularProgressBar(value){
 
+                var tempvalue = (value == 100) ? 99.9999:value;
+                
+                var degreeValue = 360 * tempvalue / 100;
                 var radius = 80, cx = 100, cy = 100,segments = 10;
                 var circumference = 2 * Math.PI * radius;
 
@@ -230,9 +260,14 @@
 
 
                 var progressArc = document.querySelector("svg.circular-pb g path.progress-arc");
-                progressArc.setAttribute("d", calcArcPath(cx,cy,radius,0,value));
+                progressArc.setAttribute("d", calcArcPath(cx,cy,radius,0,degreeValue));
                 //progressArc.setAttribute("stroke-dasharray", strokeDasharray);
 
+                var progressValue= document.querySelector("svg.circular-pb g text.progress-value");
+                progressValue.setAttribute("x", cx);
+                progressValue.setAttribute("y", cy);
+                progressValue.textContent = value + "%"
+                
             }
 
             function setAllCircularProgressBars(value){
@@ -400,7 +435,7 @@
             });
 
 
-            setAllCircularProgressBars(180);
+            setAllCircularProgressBars(50);
 
             setAllLinearProgressBars(50);
 
