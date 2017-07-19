@@ -38,20 +38,26 @@
                 background-color: none;
             }
 
-            .semi-circular-sm .arc1{
-                stroke: #c792bd;
+            .semi-circular-sm .arc1,.semi-circular-sm .arc2,.semi-circular-sm .arc3{
+                stroke: lightgray;
                 stroke-width: 20;
                 fill: none; 
             }
-            .semi-circular-sm .arc2{
-                stroke : #90257c;
+
+            .semi-circular-sm-grad .arc1,.semi-circular-sm-grad .arc2,.semi-circular-sm-grad .arc3{
+                stroke: lightgray;
                 stroke-width: 20;
                 fill: none; 
             }
-            .semi-circular-sm .arc3{
-                stroke : #731f61;
-                stroke-width: 20;
-                fill: none; 
+
+            .arc1-grad{
+                stroke: #c792bd!important; 
+            }
+            .arc2-grad{
+                stroke : #90257c!important;
+            }
+            .arc3-grad{
+                stroke : #731f61!important;
             }
 
             .linear-pb-segment-gradient, .linear-pb-segment, .linear-pb{
@@ -147,6 +153,18 @@
                         </div>
                         <div class="panel-body">
                             <div class="row">
+                                <div class="col-lg-4">
+                                    <svg class="semi-circular-sm-grad">
+                                        <g>
+                                            <path class="arc1 arc1-grad" d ="" />
+                                            <path class="arc2 arc2-grad" d ="" />
+                                            <path class="arc3 arc3-grad" d ="" />
+                                            <path class="marker" d ="" />
+                                            <text class="progress-value" alignment-baseline="middle" text-anchor="middle" x="" y=""></text>
+                                        </g>
+
+                                    </svg>
+                                </div>
                                 <div class="col-lg-4">
                                     <svg class="semi-circular-sm">
                                         <g>
@@ -265,21 +283,33 @@
                 return path;
             }
 
-            function calcSemiArcPoint(cx,cy,r,sangle){
+            function calcSemiArcMarker(cx,cy,r,sangle){
 
                 sangle = (sangle + 270) % 360;
-
                 var sx = cx + Math.cos(sangle/ 360 * 2 * Math.PI) * r;
                 var sy = cy + Math.sin(sangle/ 360 * 2 * Math.PI) * r;
+
+
+                var lx = cx + Math.cos((sangle - 3)/ 360 * 2 * Math.PI) * (r-20);
+                var ly = cy + Math.sin((sangle - 3)/ 360 * 2 * Math.PI) * (r-20);
+
+                var rx = cx + Math.cos((sangle + 3)/ 360 * 2 * Math.PI) * (r-20);
+                var ry = cy + Math.sin((sangle + 3)/ 360 * 2 * Math.PI) * (r-20);
+
+                var mx = cx + Math.cos((sangle)/ 360 * 2 * Math.PI) * (r-30);
+                var my = cy + Math.sin((sangle)/ 360 * 2 * Math.PI) * (r-30);
+
                 
                 var path = "M " + sx +" " + sy;
-                path += "H " + (sx + 10) + "V " + (sy + 10) + "H "+ (sx ) + "Z"
+                path += "L " + lx + " " + ly;
+                path += "Q " + mx + " " + my + " " + rx + " " + ry;
+                path += "L " + sx + " " + sy;
 
                 return path;
             }
 
 
-            function setSemiCircularSpeedometer(value){
+            function setSemiCircularSpeedometer(svgClassID, value){
 
 
                 var tempvalue = (value == 100) ? 99.9999:value;
@@ -289,15 +319,23 @@
                 var radius = 120, cx = 150, cy = 150,segments = 10;
                 var circumference = 2 * Math.PI * radius;
 
-                var arc1 = document.querySelector("svg.semi-circular-sm g path.arc1"); 
+                var arc1 = document.querySelector("svg." + svgClassID + " g path.arc1"); 
                 arc1.setAttribute("d", calcSemiArcPath(cx,cy,radius,270,330));
-                var arc2 = document.querySelector("svg.semi-circular-sm g path.arc2"); 
+                var arc2 = document.querySelector("svg." + svgClassID + " g path.arc2"); 
                 arc2.setAttribute("d", calcSemiArcPath(cx,cy,radius,330,30));
-                var arc3 = document.querySelector("svg.semi-circular-sm g path.arc3"); 
+                var arc3 = document.querySelector("svg." + svgClassID + " g path.arc3"); 
                 arc3.setAttribute("d", calcSemiArcPath(cx,cy,radius,30,90));
 
-                var arc3 = document.querySelector("svg.semi-circular-sm g path.marker"); 
-                arc3.setAttribute("d", calcSemiArcPoint(cx,cy,radius - 15 ,degreeValue));
+                var arc3 = document.querySelector("svg." + svgClassID + " g path.marker"); 
+                arc3.setAttribute("d", calcSemiArcMarker(cx,cy,radius,degreeValue));
+            }
+
+
+            function setAllSemiCircularSpeedometers(value){
+
+                setSemiCircularSpeedometer("semi-circular-sm",value);
+                setSemiCircularSpeedometer("semi-circular-sm-grad",value);
+
             }
 
             function setCircularProgressBarSegementGradient(value){
@@ -547,7 +585,7 @@
 
             $('#ex3').slider({
                     formatter: function(value) {
-                       setSemiCircularSpeedometer(value) 
+                       setAllSemiCircularSpeedometers(value) 
                 }
             });
 
@@ -556,7 +594,7 @@
 
             setAllLinearProgressBars(50);
 
-            setSemiCircularSpeedometer(50)
+            setAllSemiCircularSpeedometers(50)
 
 
         </script>
