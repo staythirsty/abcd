@@ -10,7 +10,7 @@
 
 
         <style>
-            .circular-pb-segment-grad, .circular-pb-segment-solid, .linear-pb-segment{
+            .circular-pb, .circular-pb-segment-grad, .circular-pb-segment-solid, .linear-pb-segment{
                 width: 200px;
                 height: 200px;
             }
@@ -30,6 +30,24 @@
             .progress-arc-gradient{
                 stroke: linear-gradient( left, #066b17, #ffc72b 100.0%);
             }
+            .linear-pb-segment-gradient, .linear-pb-segment, .linear-pb{
+
+            }
+            .full-line{
+                stroke:lightgrey;
+                stroke-width: 10;
+            }
+           .progress-line{
+                stroke: #90257c;
+                stroke-width: 10;
+            }
+            .full-line-left-circle, .full-line-right-circle{
+                fill:lightgrey;
+            }
+            .progress-line-circle{
+                fill: #90257c;
+            }
+
         </style>
     </head>
 
@@ -40,18 +58,6 @@
                     <div class="page-header">
                         <h1>SVG widgets</h1>
                     </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <svg width="300" height="100">
-                        <line x1="20" y1="20" x2="250" y2="20"  stroke-width="10" stroke="black"
-                        stroke-dasharray="25,1" />
-                        <line x1="20" y1="20" x2="145" y2="20"  stroke-width="10" stroke="green"
-                        stroke-dasharray="25,1" />
-                        <circle cx="20" cy="20" r="5" fill="green"/>
-                        <circle cx="250" cy="20" r="5"/>
-                    </svg>
                 </div>
             </div>
             <div class="row">
@@ -84,10 +90,19 @@
 
                                     </svg>
                                 </div>
+                                <div class="col-lg-4">
+                                    <svg class="circular-pb">
+                                        <g>
+                                            <path class="full-arc arc-slim" d =""/>
+                                            <path class="progress-arc arc-slim" d =""/>
+                                        </g>
+
+                                    </svg>
+                                </div>
                             </div>
                         </div>
                         <div class="panel-footer">
-                            Adjust : <input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-tooltip="hide" data-slider-min="0" data-slider-max="359" data-slider-step="1" data-slider-value="180"/>
+                            Adjust : <input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-tooltip="hide" data-slider-min="0" data-slider-max="359.9999" data-slider-step="1" data-slider-value="180"/>
                         </div>
                     </div>
 
@@ -104,18 +119,32 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-4">
+                                    <svg class="linear-pb-segment-grad">
+                                        <line class="full-line" x1="" y1="" x2="" y2=""/>
+                                        <line class="progress-line" x1="" y1="" x2="" y2=""/>
+                                        <path class="full-line-left-circle" d =""/>
+                                        <path class="full-line-right-circle" d =""/>
+                                    </svg>
+                                </div>
+                                <div class="col-lg-4">
                                     <svg class="linear-pb-segment">
-                                        <g>
-                                            <rect x="10" y="10" width="100" height="10"/>
-
-                                            <line stroke-linecap="round"
-                                                x1="20" y1="60" x2="120" y2="60"
-                                                stroke="black" stroke-width="20" stroke-dasharray="10, 5" />                                            
-                                        </g>
-
+                                        <line class="full-line" x1="" y1="" x2="" y2=""/>
+                                        <line class="progress-line" x1="" y1="" x2="" y2=""/>
+                                        <path class="full-line-left-circle" d =""/>
+                                        <path class="full-line-right-circle" d =""/>
+                                    </svg>
+                                </div>
+                                <div class="col-lg-4">
+                                    <svg class="linear-pb">
+                                        <line class="full-line" x1="" y1="" x2="" y2="" />
+                                        <line class="progress-line" x1="" y1="" x2="" y2=""/>
+                                        <path class="full-line-left-circle" d =""/>
+                                        <path class="full-line-right-circle" d =""/>
                                     </svg>
                                 </div>
                             </div>
+                        <div class="panel-footer">
+                            Adjust : <input id="ex2" data-slider-id='ex2Slider' type="text" data-slider-tooltip="hide" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="50"/>
                         </div>
                     </div>
                 </div>
@@ -187,9 +216,174 @@
 
             }
 
+
+            function setCircularProgressBar(value){
+
+                var radius = 80, cx = 100, cy = 100,segments = 10;
+                var circumference = 2 * Math.PI * radius;
+
+                //var strokeDasharray = circumference/segments - 1 +"," + 1;
+
+                var fullArc = document.querySelector("svg.circular-pb g path.full-arc"); 
+                fullArc.setAttribute("d", calcArcPath(cx,cy,radius,0,359.9999));
+                //fullArc.setAttribute("stroke-dasharray", strokeDasharray);
+
+
+                var progressArc = document.querySelector("svg.circular-pb g path.progress-arc");
+                progressArc.setAttribute("d", calcArcPath(cx,cy,radius,0,value));
+                //progressArc.setAttribute("stroke-dasharray", strokeDasharray);
+
+            }
+
             function setAllCircularProgressBars(value){
                 setCircularProgressBarSegementGradient(value);
                 setCircularProgressBarSegementSolid(value);
+                setCircularProgressBar(value);
+            }
+
+
+            function setLinearProgressBarSegmentGrad(value){
+
+                var radius = 5, cx1 = 10, cy1 = 100, cx2 = 190, cy2 = 100, segments = 5;
+
+                var length = cx2 - cx1;
+
+                var strokeDasharray = length/segments - 1 +"," + 1;
+
+                var progresscx2= cx1 + length * value/100;
+
+                var fullLine = document.querySelector("svg.linear-pb-segment-grad line.full-line")
+                fullLine.setAttribute("x1",cx1);
+                fullLine.setAttribute("y1",cy1);
+                fullLine.setAttribute("x2",cx2);
+                fullLine.setAttribute("y2",cy2);
+                fullLine.setAttribute("stroke-dasharray", strokeDasharray);
+
+                var fullLineLeftCircle = document.querySelector("svg.linear-pb-segment-grad path.full-line-left-circle")
+                fullLineLeftCircle.setAttribute("d",calcArcPath(cx1,cy1,radius,180,360));
+                
+                var fullLineRightCircle = document.querySelector("svg.linear-pb-segment-grad path.full-line-right-circle")
+                fullLineRightCircle.setAttribute("d",calcArcPath(cx2-1,cy2,radius,0,180));
+
+
+                var progressLine = document.querySelector("svg.linear-pb-segment-grad line.progress-line")
+                progressLine.setAttribute("x1",cx1);
+                progressLine.setAttribute("y1",cy1);
+                progressLine.setAttribute("x2",progresscx2);
+                progressLine.setAttribute("y2",cy2);
+                progressLine.setAttribute("stroke-dasharray", strokeDasharray);
+
+                if(value > 0 ){
+                    fullLineLeftCircle.classList.add("progress-line-circle");
+                }else{
+                    fullLineLeftCircle.classList.remove("progress-line-circle");
+                }
+
+                if(value > 99 ){
+                    fullLineRightCircle.classList.add("progress-line-circle");
+                }else{
+                    fullLineRightCircle.classList.remove("progress-line-circle");
+                }
+
+
+            }
+
+            function setLinearProgressBarSegment(value){
+
+                var radius = 5, cx1 = 10, cy1 = 100, cx2 = 190, cy2 = 100, segments = 5;
+
+                var length = cx2 - cx1;
+
+                var strokeDasharray = length/segments - 1 +"," + 1;
+
+                var progresscx2= cx1 + length * value/100;
+
+                var fullLine = document.querySelector("svg.linear-pb-segment line.full-line")
+                fullLine.setAttribute("x1",cx1);
+                fullLine.setAttribute("y1",cy1);
+                fullLine.setAttribute("x2",cx2);
+                fullLine.setAttribute("y2",cy2);
+                fullLine.setAttribute("stroke-dasharray", strokeDasharray);
+
+                var fullLineLeftCircle = document.querySelector("svg.linear-pb-segment path.full-line-left-circle")
+                fullLineLeftCircle.setAttribute("d",calcArcPath(cx1,cy1,radius,180,360));
+                
+                var fullLineRightCircle = document.querySelector("svg.linear-pb-segment path.full-line-right-circle")
+                fullLineRightCircle.setAttribute("d",calcArcPath(cx2-1,cy2,radius,0,180));
+
+
+                var progressLine = document.querySelector("svg.linear-pb-segment line.progress-line")
+                progressLine.setAttribute("x1",cx1);
+                progressLine.setAttribute("y1",cy1);
+                progressLine.setAttribute("x2",progresscx2);
+                progressLine.setAttribute("y2",cy2);
+                progressLine.setAttribute("stroke-dasharray", strokeDasharray);
+
+                if(value > 0 ){
+                    fullLineLeftCircle.classList.add("progress-line-circle");
+                }else{
+                    fullLineLeftCircle.classList.remove("progress-line-circle");
+                }
+
+                if(value > 99 ){
+                    fullLineRightCircle.classList.add("progress-line-circle");
+                }else{
+                    fullLineRightCircle.classList.remove("progress-line-circle");
+                }
+
+
+            }
+
+            function setLinearProgressBar(value){
+
+                var radius = 5, cx1 = 10, cy1 = 100, cx2 = 190, cy2 = 100, segments = 5;
+
+                var length = cx2 - cx1;
+
+                //var strokeDasharray = length/segments - 1 +"," + 1;
+
+                var progresscx2= cx1 + length * value/100;
+
+                var fullLine = document.querySelector("svg.linear-pb line.full-line")
+                fullLine.setAttribute("x1",cx1);
+                fullLine.setAttribute("y1",cy1);
+                fullLine.setAttribute("x2",cx2);
+                fullLine.setAttribute("y2",cy2);
+                //fullLine.setAttribute("stroke-dasharray", strokeDasharray);
+
+                var fullLineLeftCircle = document.querySelector("svg.linear-pb path.full-line-left-circle")
+                fullLineLeftCircle.setAttribute("d",calcArcPath(cx1,cy1,radius,180,360));
+                
+                var fullLineRightCircle = document.querySelector("svg.linear-pb path.full-line-right-circle")
+                fullLineRightCircle.setAttribute("d",calcArcPath(cx2-1,cy2,radius,0,180));
+
+
+                var progressLine = document.querySelector("svg.linear-pb line.progress-line")
+                progressLine.setAttribute("x1",cx1);
+                progressLine.setAttribute("y1",cy1);
+                progressLine.setAttribute("x2",progresscx2);
+                progressLine.setAttribute("y2",cy2);
+                //progressLine.setAttribute("stroke-dasharray", strokeDasharray);
+
+                if(value > 0 ){
+                    fullLineLeftCircle.classList.add("progress-line-circle");
+                }else{
+                    fullLineLeftCircle.classList.remove("progress-line-circle");
+                }
+
+                if(value > 99 ){
+                    fullLineRightCircle.classList.add("progress-line-circle");
+                }else{
+                    fullLineRightCircle.classList.remove("progress-line-circle");
+                }
+
+
+            }
+
+            function setAllLinearProgressBars(value){
+                setLinearProgressBarSegmentGrad(value);
+                setLinearProgressBarSegment(value);
+                setLinearProgressBar(value);
             }
 
             // Without JQuery
@@ -198,9 +392,17 @@
                        setAllCircularProgressBars(value) 
                 }
             });
+            // Without JQuery
+            $('#ex2').slider({
+                    formatter: function(value) {
+                       setAllLinearProgressBars(value) 
+                }
+            });
 
 
             setAllCircularProgressBars(180);
+
+            setAllLinearProgressBars(50);
 
 
         </script>
